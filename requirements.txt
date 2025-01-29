@@ -1,4 +1,5 @@
 flask==2.0.1
+gunicorn==20.1.0
 werkzeug==2.0.3
 pillow==9.0.1
 colorthief==0.2.1
