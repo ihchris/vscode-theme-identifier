@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VS Code Theme Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>VS Code Theme Identifier</h1>
+        <div class="upload-box">
+            <input type="file" id="fileInput" accept="image/*">
+            <div class="preview"></div>
+            <button onclick="analyze()">Identify Theme</button>
+        </div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function analyze() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select an image file');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/detect', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('result').innerHTML = 
+                        `<div class="error">${data.error}</div>`;
+                    return;
+                }
+                
+                const colorsHtml = data.colors.map(color => 
+                    `<div class="color-box" style="background: ${color}"></div>`
+                ).join('');
+                
+                document.getElementById('result').innerHTML = `
+                    <div class="result-box">
+                        <h2>Identified Theme: ${data.theme}</h2>
+                        <div class="color-palette">${colorsHtml}</div>
+                    </div>
+                `;
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML = 
+                    `<div class="error">${error.message}</div>`;
+            });
+        }
+    </script>
+</body>
+</html>
