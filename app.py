@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, jsonify
+from werkzeug.utils import secure_filename
 from PIL import Image
 import json
 import numpy as np
@@ -6,8 +7,8 @@ import os
 from colorthief import ColorThief
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads')
 
-# Load theme database
 with open('themes.json') as f:
     themes = json.load(f)['themes']
 
@@ -20,7 +21,6 @@ def extract_colors(image_path):
     return [rgb_to_hex(color) for color in palette]
 
 def color_similarity(color1, color2):
-    # Convert hex to RGB
     r1, g1, b1 = tuple(int(color1[i:i+2], 16) for i in (1, 3, 5))
     r2, g2, b2 = tuple(int(color2[i:i+2], 16) for i in (1, 3, 5))
     return np.sqrt((r1-r2)**2 + (g1-g2)**2 + (b1-b2)**2)
@@ -54,22 +54,24 @@ def detect_theme():
     file = request.files['file']
     if file.filename == '':
         return jsonify(error="No selected file"), 400
-    
+
     try:
-        temp_path = os.path.join('static', 'uploads', file.filename)
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+        filename = secure_filename(file.filename)
+        temp_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(temp_path)
         
-        # Extract colors
+        if not os.path.exists(temp_path):
+            return jsonify(error="Failed to save file"), 500
+
         image_colors = extract_colors(temp_path)
-        
-        # Find matching theme
         theme = find_theme(image_colors)
         
         return jsonify(theme=theme, colors=image_colors)
-        
+
     except Exception as e:
-        return jsonify(error=str(e)), 500
+        app.logger.error(f"Error: {str(e)}")
+        return jsonify(error=f"Processing error: {str(e)}"), 500
 
 if __name__ == '__main__':
-    os.makedirs(os.path.join('static', 'uploads'), exist_ok=True)
     app.run(debug=True)

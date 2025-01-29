@@ -3,59 +3,131 @@
 <head>
     <title>VS Code Theme Detector</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>VS Code Theme Identifier</h1>
-        <div class="upload-box">
+        <h1>🎨 VS Code Theme Identifier</h1>
+        
+        <div class="upload-box" id="dropZone">
+            <div class="preview" id="preview"></div>
+            <div class="upload-content">
+                <label class="upload-label" for="fileInput">
+                    <div class="upload-icon">📁</div>
+                    <h3>Drag & Drop or Click to Upload</h3>
+                    <p>Supported formats: PNG, JPG, JPEG</p>
+                </label>
+            </div>
             <input type="file" id="fileInput" accept="image/*">
-            <div class="preview"></div>
-            <button onclick="analyze()">Identify Theme</button>
         </div>
+
+        <div class="loading" id="loading">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin">
+                <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+            </svg>
+            <p>Analyzing your screenshot...</p>
+        </div>
+
         <div id="result"></div>
     </div>
 
     <script>
-        function analyze() {
-            const fileInput = document.getElementById('fileInput');
-            const file = fileInput.files[0];
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
+        const loading = document.getElementById('loading');
+        const result = document.getElementById('result');
+
+        // Drag & drop handlers
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#7c3aed';
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.borderColor = '#334155';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#334155';
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            handleFile(file);
+        });
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) return;
             
-            if (!file) {
-                alert('Please select an image file');
-                return;
-            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                document.querySelector('.upload-content').style.opacity = '0';
+            };
+            reader.readAsDataURL(file);
+            analyze();
+        }
 
-            const formData = new FormData();
-            formData.append('file', file);
-
-            fetch('/detect', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    document.getElementById('result').innerHTML = 
-                        `<div class="error">${data.error}</div>`;
-                    return;
+        async function analyze() {
+            const file = fileInput.files[0];
+            if (!file) return;
+        
+            loading.style.display = 'flex';
+            result.innerHTML = '';
+        
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+        
+                const response = await fetch('/detect', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Server error');
                 }
                 
-                const colorsHtml = data.colors.map(color => 
-                    `<div class="color-box" style="background: ${color}"></div>`
-                ).join('');
-                
-                document.getElementById('result').innerHTML = `
-                    <div class="result-box">
-                        <h2>Identified Theme: ${data.theme}</h2>
-                        <div class="color-palette">${colorsHtml}</div>
-                    </div>
-                `;
-            })
-            .catch(error => {
-                document.getElementById('result').innerHTML = 
-                    `<div class="error">${error.message}</div>`;
-            });
+                const data = await response.json();
+                showResult(data);
+        
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                loading.style.display = 'none';
+                // Reset the file input after processing
+                fileInput.value = '';
+            }
         }
+
+        function showResult(data) {
+            const colorsHtml = data.colors.map(color => 
+                `<div class="color-box" style="background: ${color}" data-color="${color}"></div>`
+            ).join('');
+            
+            result.innerHTML = `
+                <div class="result-box">
+                    <h2>✨ Identified Theme: <span style="color: var(--primary)">${data.theme}</span></h2>
+                    <div class="color-palette">${colorsHtml}</div>
+                </div>
+            `;
+        }
+
+        function showError(message) {
+            result.innerHTML = `
+                <div class="error">
+                    ⚠️ ${message}
+                </div>
+            `;
+        }
+
+        // Add click handler to upload box
+        dropZone.addEventListener('click', () => fileInput.click());
     </script>
 </body>
 </html>
