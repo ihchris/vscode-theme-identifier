@@ -1,5 +1,5 @@
 flask==2.0.1
 werkzeug==2.0.3
-pillow==8.4.0
+pillow==9.0.1
 colorthief==0.2.1
 numpy==1.22.3
