@@ -1,124 +1,136 @@
 {
-    "themes": [
-      {
-        "name": "Dracula",
-        "colors": {
-          "background": "#282a36",
-          "editor.background": "#282a36",
-          "foreground": "#f8f8f2",
-          "keyword": "#ff79c6",
-          "function": "#50fa7b",
-          "string": "#f1fa8c",
-          "comment": "#6272a4"
-        }
-      },
-      {
-        "name": "Monokai",
-        "colors": {
-          "background": "#272822",
-          "editor.background": "#272822",
-          "foreground": "#f8f8f2",
-          "keyword": "#f92672",
-          "function": "#a6e22e",
-          "string": "#e6db74",
-          "comment": "#75715e"
-        }
-      },
-      {
-        "name": "Solarized Dark",
-        "colors": {
-          "background": "#002b36",
-          "editor.background": "#002b36",
-          "foreground": "#839496",
-          "keyword": "#d33682",
-          "function": "#268bd2",
-          "string": "#2aa198",
-          "comment": "#586e75"
-        }
-      },
-      {
-        "name": "Nord",
-        "colors": {
-          "background": "#2E3440",
-          "editor.background": "#2E3440",
-          "foreground": "#D8DEE9",
-          "keyword": "#81A1C1",
-          "function": "#88C0D0",
-          "string": "#A3BE8C",
-          "comment": "#4C566A"
-        }
-      },
-      {
-        "name": "One Dark Pro",
-        "colors": {
-          "background": "#282C34",
-          "editor.background": "#282C34",
-          "foreground": "#ABB2BF",
-          "keyword": "#C678DD",
-          "function": "#61AFEF",
-          "string": "#98C379",
-          "comment": "#5C6370"
-        }
-      },
-      {
-        "name": "Material Theme (Ocean)",
-        "colors": {
-          "background": "#263238",
-          "editor.background": "#263238",
-          "foreground": "#B0BEC5",
-          "keyword": "#C792EA",
-          "function": "#82AAFF",
-          "string": "#C3E88D",
-          "comment": "#546E7A"
-        }
-      },
-      {
-        "name": "Ayu Dark",
-        "colors": {
-          "background": "#0A0E14",
-          "editor.background": "#0A0E14",
-          "foreground": "#B3B1AD",
-          "keyword": "#FF7733",
-          "function": "#FFB454",
-          "string": "#C2D94C",
-          "comment": "#5C6773"
-        }
-      },
-      {
-        "name": "SynthWave '84",
-        "colors": {
-          "background": "#2A2139",
-          "editor.background": "#2A2139",
-          "foreground": "#F8F8F2",
-          "keyword": "#FF7EDB",
-          "function": "#72F1B8",
-          "string": "#FFE66D",
-          "comment": "#6D77B3"
-        }
-      },
-      {
-        "name": "Cobalt2",
-        "colors": {
-          "background": "#193549",
-          "editor.background": "#193549",
-          "foreground": "#FFFFFF",
-          "keyword": "#FF9D00",
-          "function": "#FFC600",
-          "string": "#3AD900",
-          "comment": "#0088FF"
-        }
-      },
-      {
-        "name": "Tokyo Night Storm",
-        "colors": {
-          "background": "#24283B",
-          "editor.background": "#24283B",
-          "foreground": "#A9B1D6",
-          "keyword": "#BB9AF7",
-          "function": "#7AA2F7",
-          "string": "#9ECE6A",
-          "comment": "#565F89"
-        }
+  "themes": [
+    {
+      "name": "Dracula",
+      "colors": {
+        "background": "#282a36",
+        "editor.background": "#282a36",
+        "foreground": "#f8f8f2",
+        "keyword": "#ff79c6",
+        "function": "#50fa7b",
+        "string": "#f1fa8c",
+        "comment": "#6272a4"
       }
-    ]
-  }
+    },
+    {
+      "name": "Monokai",
+      "colors": {
+        "background": "#272822",
+        "editor.background": "#272822",
+        "foreground": "#f8f8f2",
+        "keyword": "#f92672",
+        "function": "#a6e22e",
+        "string": "#e6db74",
+        "comment": "#75715e"
+      }
+    },
+    {
+      "name": "Solarized Dark",
+      "colors": {
+        "background": "#002b36",
+        "editor.background": "#002b36",
+        "foreground": "#839496",
+        "keyword": "#d33682",
+        "function": "#268bd2",
+        "string": "#2aa198",
+        "comment": "#586e75"
+      }
+    },
+    {
+      "name": "Nord",
+      "colors": {
+        "background": "#2E3440",
+        "editor.background": "#2E3440",
+        "foreground": "#D8DEE9",
+        "keyword": "#81A1C1",
+        "function": "#88C0D0",
+        "string": "#A3BE8C",
+        "comment": "#4C566A"
+      }
+    },
+    {
+      "name": "One Dark Pro",
+      "colors": {
+        "background": "#282C34",
+        "editor.background": "#282C34",
+        "foreground": "#ABB2BF",
+        "keyword": "#C678DD",
+        "function": "#61AFEF",
+        "string": "#98C379",
+        "comment": "#5C6370"
+      }
+    },
+    {
+      "name": "Material Theme (Ocean)",
+      "colors": {
+        "background": "#263238",
+        "editor.background": "#263238",
+        "foreground": "#B0BEC5",
+        "keyword": "#C792EA",
+        "function": "#82AAFF",
+        "string": "#C3E88D",
+        "comment": "#546E7A"
+      }
+    },
+    {
+      "name": "Ayu Dark",
+      "colors": {
+        "background": "#0A0E14",
+        "editor.background": "#0A0E14",
+        "foreground": "#B3B1AD",
+        "keyword": "#FF7733",
+        "function": "#FFB454",
+        "string": "#C2D94C",
+        "comment": "#5C6773"
+      }
+    },
+    {
+      "name": "SynthWave '84",
+      "colors": {
+        "background": "#2A2139",
+        "editor.background": "#2A2139",
+        "foreground": "#F8F8F2",
+        "keyword": "#FF7EDB",
+        "function": "#72F1B8",
+        "string": "#FFE66D",
+        "comment": "#6D77B3"
+      }
+    },
+    {
+      "name": "Cobalt2",
+      "colors": {
+        "background": "#193549",
+        "editor.background": "#193549",
+        "foreground": "#FFFFFF",
+        "keyword": "#FF9D00",
+        "function": "#FFC600",
+        "string": "#3AD900",
+        "comment": "#0088FF"
+      }
+    },
+    {
+      "name": "Tokyo Night Storm",
+      "colors": {
+        "background": "#24283B",
+        "editor.background": "#24283B",
+        "foreground": "#A9B1D6",
+        "keyword": "#BB9AF7",
+        "function": "#7AA2F7",
+        "string": "#9ECE6A",
+        "comment": "#565F89"
+      }
+    },
+    {
+      "name": "Sorcerer",
+      "colors": {
+        "background": "#0e141a",
+        "editor.background": "#0e141a",
+        "foreground": "#ffffff",
+        "keyword": "#ff006a",
+        "function": "#44dfff",
+        "string": "#aaed36",
+        "comment": "#5a6986aa"
+      }
+    }
+  ]
+}
