@@ -55,6 +55,7 @@ def detect_theme():
     if file.filename == '':
         return jsonify(error="No selected file"), 400
 
+    temp_path = None  # Track the temporary file path
     try:
         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
         filename = secure_filename(file.filename)
@@ -72,6 +73,14 @@ def detect_theme():
     except Exception as e:
         app.logger.error(f"Error: {str(e)}")
         return jsonify(error=f"Processing error: {str(e)}"), 500
+
+    finally:
+        # Clean up the temporary file after processing
+        if temp_path and os.path.exists(temp_path):
+            try:
+                os.remove(temp_path)
+            except Exception as cleanup_error:
+                app.logger.error(f"Failed to clean up file: {str(cleanup_error)}")
 
 if __name__ == '__main__':
     app.run(debug=True)
